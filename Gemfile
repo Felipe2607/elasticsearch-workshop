@@ -36,8 +36,12 @@ gem "bootsnap", require: false
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem "rack-cors"
 
+gem 'elasticsearch-rails'
+gem 'elasticsearch'
+
 group :development, :test do
   gem 'rubocop', '~> 1.24', require: false
+  gem 'dotenv-rails'
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
 end
 
