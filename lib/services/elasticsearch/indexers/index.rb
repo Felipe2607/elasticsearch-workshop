@@ -1,5 +1,3 @@
-require 'sidekiq'
-
 module Elasticsearch
   class Index
     def perform(*ids)

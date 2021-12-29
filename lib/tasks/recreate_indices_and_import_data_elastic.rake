@@ -1,4 +1,6 @@
 require './lib/services/elasticsearch/feed'
+require './lib/services/elasticsearch/indexers/product_record'
+require './lib/services/elasticsearch/indexers/user_record'
 desc 'Create indices and import data in Elastic Search'
 
 namespace :elastic do
@@ -18,8 +20,8 @@ namespace :elastic do
 
   task loadDataOnIndices: :environment do
     puts 'Importing data'
-    Elasticsearch::UserRecord::Index.new.perform(User.all.pluck(:id))
     Elasticsearch::ProductRecord::Index.new.perform(Product.all.pluck(:id))
+    Elasticsearch::UserRecord::Index.new.perform(User.all.pluck(:id))
     puts 'Data imported to Elastic Search'
   end
 end
