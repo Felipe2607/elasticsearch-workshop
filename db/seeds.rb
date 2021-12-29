@@ -24,3 +24,6 @@ end
     Product.create(user_id: user.id, name: 'Pandorit' + vowels[i.modulo(5)] + j.to_s)
   end
 end
+
+user = User.create(name: 'Alverso')
+Product.create(user_id: user.id, name: "Alverso's product")
