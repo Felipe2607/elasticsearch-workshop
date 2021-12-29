@@ -44,8 +44,7 @@ module Elasticsearch
       client.index(
         index: index,
         id: id_key_for(id, type),
-        body: body,
-        type: '_doc'
+        body: body
       )
     end
 
@@ -57,7 +56,7 @@ module Elasticsearch
         id = id_key_for(item[:id], type)
 
         [
-          { index: { _index: index, _id: id, _type: '_doc' } }.to_json,
+          { index: { _index: index, _id: id } }.to_json,
           body.to_json
         ]
       end.flatten.join("\n") + "\n"
@@ -89,8 +88,7 @@ module Elasticsearch
 
       client.delete(
         index: index,
-        id: key,
-        type: '_doc'
+        id: key
       )
     rescue Elasticsearch::Transport::Transport::Errors::NotFound
       if ENV['LOG_ELASTICSEARCH_QUERIES'] == 'true' && !::Rails.env.test?
