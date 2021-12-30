@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       resources :search, only: [] do
         collection do
           get :search_by_text
+          get :search_by_text_es
         end
       end
     end
