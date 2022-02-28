@@ -3,13 +3,24 @@ module Api
     class SearchController < ApplicationController
       def search_by_text
         text = params[:text]
-        users = User.where('name LIKE ?', "%#{text}%").map do |u|
+        type = params[:type] || 'all'
+        users = %w[all user].include?(type) ? get_users_by_text(text) : []
+        products = %w[all product].include?(type) ? get_products_by_text(text) : []
+        render json: users.concat(products)
+      end
+
+      private
+
+      def get_users_by_text(text)
+        User.where('name LIKE ?', "%#{text}%").map do |u|
           { id: u.id, name: u.name, type: 'user' }
         end
-        products = Product.where('name LIKE ?', "%#{text}%").map do |p|
+      end
+
+      def get_products_by_text(text)
+        Product.where('name LIKE ?', "%#{text}%").map do |p|
           { id: p.id, name: p.name, type: 'product' }
         end
-        render json: users.concat(products)
       end
     end
   end
