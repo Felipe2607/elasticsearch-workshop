@@ -11,6 +11,13 @@ module Api
         render json: users.concat(products)
       end
 
+      def search_by_text_es
+        type = params[:type]&.downcase&.to_sym || :all
+        response = Elasticsearch::SearchFinder.new(text: params[:text], type: type).search
+
+        render json: response
+      end
+
       private
 
       def get_users_by_text(text)
@@ -23,12 +30,6 @@ module Api
         Product.where('name LIKE ?', "%#{text}%").map do |p|
           { id: p.id, name: p.name, type: 'product' }
         end
-      end
-
-      def search_by_text_es
-        response = Elasticsearch::SearchFinder.new(custom_params: params).search
-
-        render json: response
       end
     end
   end
