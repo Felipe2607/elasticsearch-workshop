@@ -3,9 +3,9 @@ module Api
     class SearchController < ApplicationController
       def search_by_text
         text = params[:text]
-        type = params[:type] || 'all'
-        users = %w[all user].include?(type) ? get_users_by_text(text) : []
-        products = %w[all product].include?(type) ? get_products_by_text(text) : []
+        type = params[:type]&.downcase&.to_sym || :all
+        users = %i[all user].include?(type) ? get_users_by_text(text) : []
+        products = %i[all product].include?(type) ? get_products_by_text(text) : []
         render json: users.concat(products)
       end
 
