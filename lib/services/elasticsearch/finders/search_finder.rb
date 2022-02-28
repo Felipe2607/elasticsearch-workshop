@@ -2,13 +2,11 @@ require './lib/services/elasticsearch/feed'
 
 module Elasticsearch
   class SearchFinder
-    attr_accessor :params, :type, :text
+    attr_accessor :type, :text
 
-    def initialize(custom_params:)
-      self.params = custom_params
-
-      self.type = params.fetch('type')
-      self.text = params.fetch('text')
+    def initialize(text:, type:)
+      self.type = type
+      self.text = text
     end
 
     def search
