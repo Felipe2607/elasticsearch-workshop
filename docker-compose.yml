@@ -1,0 +1,50 @@
+version: "3.6"
+
+networks:
+  backend:
+
+volumes:
+  bundle_cache:
+  db-data:
+  es-data:
+
+services:
+  elasticsearch:
+    image: elasticsearch:8.2.0
+    volumes:
+      - es-data:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+    expose:
+      - "9200"
+    networks:
+      - backend
+    environment:
+      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+
+  kibana:
+    image: kibana:8.2.0
+    networks:
+      - backend
+    depends_on:
+      - elasticsearch
+
+  api:
+    build:
+      context: ./
+      dockerfile: Dockerfile.local
+    container_name: api
+    volumes:
+      - .:/app
+      - db-data:/app/db/test.sqlite3
+      - bundle_cache:/bundle
+    ports:
+      - "3000:3000"
+    expose:
+      - "3000"
+    depends_on:
+      - elasticsearch
+    networks:
+      - backend
+    tty: true
+    stdin_open: true
