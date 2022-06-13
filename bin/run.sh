@@ -12,6 +12,8 @@ if [[ $? != 0 ]]; then
   echo "== Failed to migrate. Running setup first."
   echo
   bundle exec rake db:setup
+  bundle exec rails db:seed
+  bundle exec rails elastic:createIndices
 fi
 
 # Start the server
