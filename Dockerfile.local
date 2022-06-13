@@ -10,4 +10,4 @@ ENV BUNDLE_PATH=/bundle \
 ENV PATH="${BUNDLE_BIN}:${PATH}"
 
 # Start the main process.
-CMD ["./run.sh"]
+CMD ["./bin/run.sh"]
