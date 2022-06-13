@@ -42,6 +42,8 @@ services:
       context: ./
       dockerfile: Dockerfile.local
     container_name: api
+    environment:
+      PORT: "3000"
     volumes:
       - .:/app
       - db-data:/app/db/test.sqlite3
