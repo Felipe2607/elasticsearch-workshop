@@ -22,3 +22,18 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+To start everything:
+```
+docker-compose build
+docker-compose up
+```
+
+To connect to a running container:
+```
+docker exec -it api sh # in this example it will connect to the api
+```
+
+
+To open Kibana: http://localhost:5601
+To open Kibana's devtool: http://localhost:5601/app/dev_tools#/console
