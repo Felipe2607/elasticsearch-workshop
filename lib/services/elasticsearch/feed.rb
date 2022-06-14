@@ -9,7 +9,7 @@ module Elasticsearch
               id: { type: 'integer' },
               name: { type: 'text' },
               type: { type: 'text' },
-              location: { type: 'geo_point', 'null_value': '0' }
+              location: { type: 'geo_point' }
             }
           }
         }

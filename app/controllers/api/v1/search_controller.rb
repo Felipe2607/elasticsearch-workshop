@@ -12,8 +12,7 @@ module Api
       end
 
       def search_by_text_es
-        type = params[:type]&.downcase&.to_sym || :all
-        response = Elasticsearch::SearchFinder.new(text: params[:text], type: type).search
+        response = Elasticsearch::SearchFinder.new(custom_params: params).search
 
         render json: response
       end

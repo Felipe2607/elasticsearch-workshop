@@ -2,11 +2,15 @@ require './lib/services/elasticsearch/feed'
 
 module Elasticsearch
   class SearchFinder
-    attr_accessor :type, :text
+    attr_accessor :params, :type, :text, :lat, :lon
 
-    def initialize(text:, type:)
-      self.type = type
-      self.text = text
+    def initialize(custom_params:)
+      self.params = custom_params
+
+      self.type = params.fetch('type')&.downcase&.to_sym || :all
+      self.text = params.fetch('text')
+      self.lat = params.fetch('lat')
+      self.lon = params.fetch('lon')
     end
 
     def search
@@ -19,6 +23,7 @@ module Elasticsearch
 
     def query
       {
+        size: 100,
         sort: [
           '_score'
         ],
@@ -41,6 +46,7 @@ module Elasticsearch
     def functions_array
       array = []
       array << string_match_query('name')
+      array << location_query
       array.compact
     end
 
@@ -75,6 +81,21 @@ module Elasticsearch
           }
         },
         weight: 3
+      }
+    end
+
+    def location_query
+      {
+        filter: {
+          geo_distance: {
+            location: {
+              lat: lat,
+              lon: lon
+            },
+            distance: '100km'
+          }
+        },
+        weight: 100
       }
     end
   end
