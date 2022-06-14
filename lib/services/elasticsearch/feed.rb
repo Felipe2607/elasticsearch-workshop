@@ -2,13 +2,14 @@ require_relative './repository'
 module Elasticsearch
   module Feed
     class Repository < Elasticsearch::Repository
-      def settings_and_mappings # rubocop:disable MethodLength
+      def settings_and_mappings
         {
           mappings: {
             properties: {
               id: { type: 'integer' },
               name: { type: 'text' },
               type: { type: 'text' },
+              location: { type: 'geo_point', 'null_value': '0' }
             }
           }
         }
