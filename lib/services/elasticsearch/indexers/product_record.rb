@@ -14,8 +14,8 @@ module Elasticsearch
           name: product.name,
           type: type,
           location: {
-            lat: product.latitude,
-            lon: product.longitude
+            lat: product.latitude.to_f,
+            lon: product.longitude.to_f
           }
         }
       end
