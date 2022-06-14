@@ -12,7 +12,11 @@ module Elasticsearch
         {
           id: user.id,
           name: user.name,
-          type: type
+          type: type,
+          location: {
+            lat: user.latitude,
+            lon: user.longitude
+          }
         }
       end
 
